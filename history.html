@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - CropHealth</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <link rel="apple-touch-icon" href="../icons/icon-192.svg">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">🌱 CropHealth</div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="disease.html">Disease Detection</a>
+                <a href="camera.html">Image Capture</a>
+                <a href="voice.html">Voice Assistant</a>
+                <a href="language.html">Language</a>
+                <a href="history.html">History</a>
+                <a href="about.html">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <h1>Detection History 🕒</h1>
+        <p>A record of your past crop disease detections, stored on this device.</p>
+
+        <button onclick="clearHistory()" style="background:#c0392b;">
+            Clear History
+        </button>
+
+        <div id="historyList"></div>
+    </div>
+
+    <footer>
+        <h3>🌱 CropHealth</h3>
+        <p>Smart agriculture support platform for better crop health.</p>
+        <p>© 2026 CropHealth. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+
+</body>
+</html>
