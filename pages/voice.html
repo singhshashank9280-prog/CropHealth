@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Voice Assistant - CropHealth
+    </title>
+
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <link rel="apple-touch-icon" href="../icons/icon-192.svg">
+</head>
+
+
+<body>
+
+
+
+    <!-- ================= NAVBAR ================= -->
+
+
+    <header>
+
+        <nav>
+
+
+            <div class="logo">
+                🌱 CropHealth
+            </div>
+
+
+
+            <div class="nav-links">
+
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+
+                <a href="disease.html">
+                    Disease Detection
+                </a>
+
+
+                <a href="camera.html">
+                    Image Capture
+                </a>
+
+
+                <a href="voice.html">
+                    Voice Assistant
+                </a>
+
+
+                <a href="language.html">
+                    Language
+                </a>
+                <a href="history.html">
+                    History
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+
+            </div>
+
+
+        </nav>
+
+    </header>
+
+
+
+
+
+
+
+    <!-- ================= VOICE ASSISTANT ================= -->
+
+
+    <div class="page-container">
+
+
+
+        <h1>
+            Voice Assistant 🎤
+        </h1>
+
+
+
+
+        <p>
+
+            Ask your farming related questions
+            using your voice.
+
+        </p>
+
+
+
+
+        <!-- LANGUAGE SELECTION -->
+
+
+        <select id="voiceLanguage">
+
+
+            <option value="en-IN">
+                English
+            </option>
+
+
+            <option value="hi-IN">
+                हिंदी (Hindi)
+            </option>
+
+
+            <option value="bn-IN">
+                বাংলা (Bengali)
+            </option>
+
+
+            <option value="as-IN">
+                অসমীয়া (Assamese)
+            </option>
+
+
+            <option value="ta-IN">
+                தமிழ் (Tamil)
+            </option>
+
+
+            <option value="te-IN">
+                తెలుగు (Telugu)
+            </option>
+
+
+        </select>
+
+
+
+
+
+        <br>
+
+
+
+
+        <!-- VOICE BUTTON -->
+
+
+        <button onclick="startVoice()">
+
+            🎤 Start Listening
+
+        </button>
+
+
+
+
+
+
+        <!-- USER SPEECH -->
+
+
+        <div id="voiceText">
+
+
+            Your voice input will appear here...
+
+        </div>
+
+
+
+
+
+
+
+        <!-- RESPONSE -->
+
+
+        <div id="voiceAnswer">
+
+
+            Assistant response will appear here...
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ================= FEATURES ================= -->
+
+
+    <div class="page-container">
+
+
+        <h1>
+            Voice Assistant Features
+        </h1>
+
+
+
+
+        <div class="cards">
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Voice Input
+                </h3>
+
+
+                <p>
+                    Ask questions without typing.
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Multiple Languages
+                </h3>
+
+
+                <p>
+                    Supports different Indian languages.
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Farmer Friendly
+                </h3>
+
+
+                <p>
+                    Easy interaction for all users.
+                </p>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+
+    <footer>
+
+
+        <h3>
+            🌱 CropHealth
+        </h3>
+
+
+        <p>
+            Smart agriculture support platform
+            for better crop health.
+        </p>
+
+
+        <p>
+            © 2026 CropHealth. All rights reserved.
+        </p>
+
+
+    </footer>
+
+
+
+
+
+
+    <script src="../js/script.js"></script>
+
+
+</body>
+
+
+</html>

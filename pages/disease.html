@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Disease Detection - CropHealth
+    </title>
+
+
+    <!-- Since this file is inside pages folder -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <link rel="apple-touch-icon" href="../icons/icon-192.svg">
+</head>
+
+
+
+<body>
+
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header>
+
+        <nav>
+
+
+            <div class="logo">
+                🌱 CropHealth
+            </div>
+
+
+
+            <div class="nav-links">
+
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+
+                <a href="disease.html">
+                    Disease Detection
+                </a>
+
+
+                <a href="camera.html">
+                    Image Capture
+                </a>
+
+
+                <a href="voice.html">
+                    Voice Assistant
+                </a>
+
+
+                <a href="language.html">
+                    Language
+                </a>
+                <a href="history.html">
+                    History
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+
+            </div>
+
+
+        </nav>
+
+    </header>
+
+
+
+
+
+
+    <!-- ================= DISEASE SECTION ================= -->
+    <div class="page-container" style="margin-bottom: 0;">
+        <div class="farm-summary-banner" id="farmSummaryBanner"></div>
+    </div>
+
+    <div class="page-container">
+
+
+
+        <h1>
+            Crop Disease Detection 🌱
+        </h1>
+
+
+
+        <p>
+
+            Upload a crop image and analyze the health
+            condition of your crop.
+
+        </p>
+
+
+
+
+
+        <!-- IMAGE UPLOAD -->
+
+
+        <input type="file" id="cropImage" accept="image/*">
+
+
+
+
+
+        <!-- IMAGE PREVIEW -->
+
+
+        <img id="previewImage" src="" alt="Crop Preview" style="display:none;">
+
+
+
+
+
+
+        <br>
+
+
+
+        <button onclick="detectDisease()">
+
+            Detect Disease
+
+        </button>
+
+
+
+
+
+        <!-- RESULT AREA -->
+
+
+        <div id="result">
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- ================= INFORMATION CARDS ================= -->
+
+
+    <div class="page-container">
+
+
+        <h1>
+            How It Works
+        </h1>
+
+
+
+        <div class="cards">
+
+
+
+            <div class="card">
+
+                <h3>
+                    Step 1
+                </h3>
+
+                <p>
+                    Upload a clear image of the crop leaf.
+                </p>
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+                <h3>
+                    Step 2
+                </h3>
+
+                <p>
+                    System analyzes the crop condition.
+                </p>
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+                <h3>
+                    Step 3
+                </h3>
+
+                <p>
+                    Get disease information and prevention tips.
+                </p>
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+
+    <footer>
+
+
+        <h3>
+            🌱 CropHealth
+        </h3>
+
+
+        <p>
+            Smart agriculture support platform
+            for better crop health.
+        </p>
+
+
+        <p>
+            © 2026 CropHealth. All rights reserved.
+        </p>
+
+
+    </footer>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+
+    <script src="../js/script.js"></script>
+
+
+</body>
+
+
+</html>

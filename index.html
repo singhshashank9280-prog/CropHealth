@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CropHealth</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <link rel="apple-touch-icon" href="icons/icon-192.svg">
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header>
+
+        <nav>
+
+
+            <div class="logo">
+                🌱 CropHealth
+            </div>
+
+
+
+            <div class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+
+                <a href="pages/disease.html">
+                    Disease Detection
+                </a>
+
+
+                <a href="pages/camera.html">
+                    Image Capture
+                </a>
+
+
+                <a href="pages/voice.html">
+                    Voice Assistant
+                </a>
+
+
+                <a href="pages/language.html">
+                    Language
+                </a>
+                <a href="pages/history.html">
+                    History
+                </a>
+
+                <a href="pages/about.html">
+                    About
+                </a>
+
+                <button id="themeToggle" onclick="toggleTheme()">
+
+                    🌙 Dark Mode
+
+                </button>
+
+            </div>
+
+
+        </nav>
+
+    </header>
+
+
+
+
+
+    <!-- ================= HOME ================= -->
+
+
+    <section class="hero">
+
+
+        <h1>
+            Welcome to CropHealth 🌱
+        </h1>
+
+
+        <p>
+
+            A platform to identify crop diseases,
+            understand crop health and help farmers
+            through digital assistance.
+
+        </p>
+
+
+
+        <a class="btn" href="pages/disease.html">
+
+            Start Detection
+
+        </a>
+
+
+    </section>
+    <!-- ================= FARM CONTEXT ================= -->
+
+    <div class="page-container">
+
+        <h1>🌾 Your Farm Profile</h1>
+        <p>Detect your location for local weather, choose your soil type, and get seasonal crop suggestions.</p>
+
+        <div class="farm-actions">
+            <button onclick="detectFarmLocation()">📍 Detect My Location</button>
+        </div>
+
+        <div class="farm-context">
+
+            <div class="farm-card">
+                <h4>Location</h4>
+                <div class="farm-value" id="farmLocationValue">Not set</div>
+                <div class="farm-sub" id="farmLocationSub"></div>
+            </div>
+
+            <div class="farm-card">
+                <h4>Weather</h4>
+                <div class="farm-value" id="farmWeatherValue">Not set</div>
+                <div class="farm-sub" id="farmWeatherSub"></div>
+            </div>
+
+            <div class="farm-card">
+                <h4>Soil Type</h4>
+                <select id="soilTypeSelect" onchange="saveSoilType()">
+                    <option value="">Select soil type</option>
+                    <option value="Sandy">Sandy</option>
+                    <option value="Clay">Clay</option>
+                    <option value="Loamy">Loamy</option>
+                    <option value="Silty">Silty</option>
+                    <option value="Peaty">Peaty</option>
+                    <option value="Chalky">Chalky</option>
+                </select>
+            </div>
+
+        </div>
+
+        <h2 style="text-align:center; margin-top: 10px;">
+            Seasonal Crop Suggestions (<span id="currentSeasonLabel"></span>)
+        </h2>
+
+        <div class="crop-suggestions" id="cropSuggestions"></div>
+
+    </div>
+
+
+
+
+
+
+    <!-- ================= FARMER SUPPORT ================= -->
+
+
+    <div class="page-container">
+
+
+        <h1>
+            Farmer Support
+        </h1>
+
+
+        <p>
+            Get information about crops,
+            diseases and prevention methods.
+        </p>
+
+
+
+        <div class="cards">
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Disease Prevention
+                </h3>
+
+
+                <p>
+                    Learn how to protect crops from diseases
+                    using better farming practices.
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Crop Information
+                </h3>
+
+
+                <p>
+                    Get information about crop health,
+                    growth and maintenance.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Smart Assistance
+                </h3>
+
+
+                <p>
+                    Use voice and text support for
+                    farming related questions.
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ================= QUICK FEATURES ================= -->
+
+
+    <div class="page-container">
+
+
+        <h1>
+            Our Features
+        </h1>
+
+
+
+        <div class="cards">
+
+
+
+            <div class="card">
+
+                <h3>
+                    📷 Image Detection
+                </h3>
+
+                <p>
+                    Upload crop images and analyze health conditions.
+                </p>
+
+            </div>
+
+
+
+
+            <div class="card">
+
+                <h3>
+                    🎤 Voice Assistant
+                </h3>
+
+                <p>
+                    Ask farming questions using voice.
+                </p>
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+                <h3>
+                    🌍 Multiple Languages
+                </h3>
+
+                <p>
+                    Support for Indian regional languages.
+                </p>
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <form id="contactForm">
+
+        <input type="text" id="contactName" name="name" placeholder="Your Name" required>
+
+        <input type="email" id="contactEmail" name="email" placeholder="Your Email" required>
+
+        <textarea id="contactMessage" name="message" placeholder="Your Message" required></textarea>
+
+        <input type="text" id="contactHoneypot" name="_gotcha" style="display:none">
+
+        <button type="submit" id="contactSubmitBtn">
+            Send Message
+        </button>
+
+        <div id="contactStatus" style="margin-top:15px;"></div>
+
+    </form>
+
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+
+    <footer>
+
+
+        <h3>
+            🌱 CropHealth
+        </h3>
+
+
+        <p>
+            Smart agriculture support platform
+            for better crop health.
+        </p>
+
+
+        <p>
+
+            © 2026 CropHealth. All rights reserved.
+
+        </p>
+
+
+
+    </footer>
+
+
+
+
+
+
+    <script src="js/script.js"></script>
+
+
+</body>
+
+</html>

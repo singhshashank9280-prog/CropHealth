@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Language Support - CropHealth
+    </title>
+
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <link rel="apple-touch-icon" href="../icons/icon-192.svg">
+</head>
+
+
+<body>
+
+
+
+    <!-- ================= NAVBAR ================= -->
+
+
+    <header>
+
+        <nav>
+
+
+            <div class="logo">
+                🌱 CropHealth
+            </div>
+
+
+
+            <div class="nav-links">
+
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+
+                <a href="disease.html">
+                    Disease Detection
+                </a>
+
+
+                <a href="camera.html">
+                    Image Capture
+                </a>
+
+
+                <a href="voice.html">
+                    Voice Assistant
+                </a>
+
+
+                <a href="language.html">
+                    Language
+                </a>
+                <a href="history.html">
+                    History
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+
+            </div>
+
+
+        </nav>
+
+    </header>
+
+
+
+
+
+
+
+    <!-- ================= LANGUAGE SECTION ================= -->
+
+
+    <div class="page-container">
+
+
+
+        <h1>
+            Multilingual Farmer Assistant 🌍
+        </h1>
+
+
+
+
+        <p>
+
+            Select your preferred language and
+            communicate easily.
+
+        </p>
+
+
+
+
+
+
+        <select id="languageSelect" onchange="changeLanguage()">
+
+
+
+            <option value="english">
+                English
+            </option>
+
+
+
+            <option value="hindi">
+                हिंदी (Hindi)
+            </option>
+
+
+
+            <option value="bengali">
+                বাংলা (Bengali)
+            </option>
+
+
+
+            <option value="telugu">
+                తెలుగు (Telugu)
+            </option>
+
+
+
+            <option value="marathi">
+                मराठी (Marathi)
+            </option>
+
+
+
+            <option value="tamil">
+                தமிழ் (Tamil)
+            </option>
+
+
+
+            <option value="gujarati">
+                ગુજરાતી (Gujarati)
+            </option>
+
+
+
+            <option value="kannada">
+                ಕನ್ನಡ (Kannada)
+            </option>
+
+
+
+            <option value="malayalam">
+                മലയാളം (Malayalam)
+            </option>
+
+
+
+            <option value="punjabi">
+                ਪੰਜਾਬੀ (Punjabi)
+            </option>
+
+
+
+            <option value="odia">
+                ଓଡ଼ିଆ (Odia)
+            </option>
+
+
+
+            <option value="assamese">
+                অসমীয়া (Assamese)
+            </option>
+
+
+
+        </select>
+
+
+
+
+
+
+
+        <h2 id="questionTitle">
+
+            Ask your question
+
+        </h2>
+
+
+
+
+        <textarea id="questionBox" placeholder="Type your crop related question here...">
+
+</textarea>
+
+
+
+
+
+        <button onclick="askQuestion()">
+
+            Get Answer
+
+        </button>
+
+
+
+
+
+
+        <div id="answerBox">
+
+
+            Your answer will appear here...
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- ================= SUPPORTED LANGUAGES ================= -->
+
+
+    <div class="page-container">
+
+
+        <h1>
+            Supported Languages
+        </h1>
+
+
+
+
+        <div class="cards">
+
+
+
+            <div class="card">
+
+                <h3>
+                    हिंदी
+                </h3>
+
+                <p>
+                    North and Central India
+                </p>
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+                <h3>
+                    অসমীয়া
+                </h3>
+
+                <p>
+                    Assam and Northeast India
+                </p>
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+                <h3>
+                    தமிழ்
+                </h3>
+
+                <p>
+                    Tamil Nadu region
+                </p>
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+                <h3>
+                    తెలుగు
+                </h3>
+
+                <p>
+                    Andhra Pradesh and Telangana
+                </p>
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+
+    <footer>
+
+
+        <h3>
+            🌱 CropHealth
+        </h3>
+
+
+        <p>
+            Smart agriculture support platform
+            for better crop health.
+        </p>
+
+
+        <p>
+            © 2026 CropHealth. All rights reserved.
+        </p>
+
+
+    </footer>
+
+
+
+
+
+
+    <script src="../js/script.js"></script>
+
+
+</body>
+
+
+</html>

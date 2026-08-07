@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Image Capture - CropHealth
+    </title>
+
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <link rel="apple-touch-icon" href="../icons/icon-192.svg">
+</head>
+
+
+<body>
+
+
+
+    <!-- ================= NAVBAR ================= -->
+
+
+    <header>
+
+        <nav>
+
+
+            <div class="logo">
+                🌱 CropHealth
+            </div>
+
+
+
+            <div class="nav-links">
+
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+
+                <a href="disease.html">
+                    Disease Detection
+                </a>
+
+
+                <a href="camera.html">
+                    Image Capture
+                </a>
+
+
+                <a href="voice.html">
+                    Voice Assistant
+                </a>
+
+
+                <a href="language.html">
+                    Language
+                </a>
+                <a href="history.html">
+                    History
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+
+            </div>
+
+
+        </nav>
+
+    </header>
+
+
+
+
+
+
+
+    <!-- ================= CAMERA SECTION ================= -->
+
+    <div class="page-container">
+
+        <h1>
+            Capture Crop Image 📷
+        </h1>
+
+
+        <p>
+            Use your live camera to capture crop images
+            for disease analysis.
+        </p>
+
+
+        <!-- LIVE CAMERA BOX -->
+
+        <div class="camera-box">
+
+            <video id="cameraView" autoplay playsinline>
+            </video>
+
+
+        </div>
+
+
+
+        <div class="camera-buttons">
+            <button onclick="openCamera()">
+                Open Camera
+            </button>
+            <button onclick="captureImage()">
+                Capture Image
+            </button>
+        </div>
+
+
+
+
+        <!-- CAPTURED IMAGE -->
+
+
+        <h2>
+            Captured Image
+        </h2>
+
+
+        <canvas id="captureCanvas">
+        </canvas>
+
+
+
+        <button onclick="analyzeCameraImage()">
+            Analyze Crop
+        </button>
+
+
+
+        <div id="cameraResult">
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ================= TIPS ================= -->
+
+
+    <div class="page-container">
+
+
+        <h1>
+            Tips for Better Images
+        </h1>
+
+
+
+        <div class="cards">
+
+
+            <div class="card">
+
+
+                <h3>
+                    Good Lighting
+                </h3>
+
+
+                <p>
+                    Capture images in natural light
+                    for better results.
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Clear Leaf Image
+                </h3>
+
+
+                <p>
+                    Keep the infected area visible
+                    and focused.
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <div class="card">
+
+
+                <h3>
+                    Avoid Blur
+                </h3>
+
+
+                <p>
+                    Hold the camera steady while capturing.
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+
+    <footer>
+
+
+        <h3>
+            🌱 CropHealth
+        </h3>
+
+
+        <p>
+            Smart agriculture support platform
+            for better crop health.
+        </p>
+
+
+        <p>
+            © 2026 CropHealth. All rights reserved.
+        </p>
+
+
+    </footer>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+
+    <script src="../js/script.js"></script>
+
+
+</body>
+
+
+</html>
