@@ -1509,47 +1509,108 @@ function loadFarmProfile() {
 function detectFarmLocation() {
     const statusEl = document.getElementById("farmLocationValue");
     const subEl = document.getElementById("farmLocationSub");
-    if (!statusEl) return;
 
-    if (!("geolocation" in navigator)) {
+    if (!statusEl || !subEl) return;
+
+    if (!navigator.geolocation) {
         statusEl.textContent = "Not supported";
-        subEl.textContent = "Your browser doesn't support location detection.";
+        subEl.textContent = "Your browser does not support location detection.";
         return;
     }
 
     statusEl.textContent = "Detecting...";
-    subEl.textContent = "";
+    subEl.textContent = "Please allow location access.";
 
     navigator.geolocation.getCurrentPosition(
-        async (position) => {
-            const { latitude, longitude } = position.coords;
-            saveFarmProfile({ lat: latitude, lon: longitude });
+        async function (position) {
 
-            // Reverse geocode to a human-readable place name (free, no API key)
-            try {
-                const res = await fetch(
-                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-                );
-                const data = await res.json();
-                const placeName = [data.locality, data.principalSubdivision]
-                    .filter(Boolean)
-                    .join(", ") || `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
 
-                statusEl.textContent = placeName;
-                subEl.textContent = `${latitude.toFixed(3)}, ${longitude.toFixed(3)}`;
-                saveFarmProfile({ placeName });
-            } catch (err) {
-                statusEl.textContent = `${latitude.toFixed(3)}, ${longitude.toFixed(3)}`;
-                subEl.textContent = "Location saved (name lookup failed - are you offline?)";
-                saveFarmProfile({ placeName: `${latitude.toFixed(3)}, ${longitude.toFixed(3)}` });
+            console.log("Location detected:", latitude, longitude);
+
+            // Save coordinates only if saveFarmProfile exists
+            if (typeof saveFarmProfile === "function") {
+                saveFarmProfile({
+                    lat: latitude,
+                    lon: longitude
+                });
             }
 
-            // Now that we have coordinates, fetch weather automatically
+            // Show coordinates immediately
+            statusEl.textContent = "Location detected";
+            subEl.textContent =
+                `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+
+            // Try to get place name
+            try {
+                const response = await fetch(
+                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Reverse geocoding failed");
+                }
+
+                const data = await response.json();
+
+                const placeName = [
+                    data.locality,
+                    data.principalSubdivision
+                ]
+                    .filter(Boolean)
+                    .join(", ");
+
+                if (placeName) {
+                    statusEl.textContent = placeName;
+
+                    if (typeof saveFarmProfile === "function") {
+                        saveFarmProfile({
+                            placeName: placeName
+                        });
+                    }
+                }
+
+            } catch (error) {
+                console.warn("Place name lookup failed:", error);
+
+                statusEl.textContent = "Location detected";
+                subEl.textContent =
+                    `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+            }
+
+            // Weather
             fetchFarmWeather(latitude, longitude);
         },
-        (error) => {
-            statusEl.textContent = "Permission denied";
-            subEl.textContent = "Please allow location access and try again.";
+
+        function (error) {
+
+            console.error("Geolocation error:", error);
+
+            if (error.code === 1) {
+                statusEl.textContent = "Permission denied";
+                subEl.textContent =
+                    "Allow location access in your browser and try again.";
+            }
+            else if (error.code === 2) {
+                statusEl.textContent = "Location unavailable";
+                subEl.textContent =
+                    "Your device could not determine your location.";
+            }
+            else if (error.code === 3) {
+                statusEl.textContent = "Request timed out";
+                subEl.textContent =
+                    "Try detecting your location again.";
+            }
+            else {
+                statusEl.textContent = "Location error";
+                subEl.textContent = error.message;
+            }
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
         }
     );
 }
