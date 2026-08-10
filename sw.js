@@ -83,7 +83,7 @@ self.addEventListener("fetch", (event) => {
               caches.open(CACHE_VERSION).then((cache) => cache.put(request, fresh));
             }
           })
-          .catch(() => {/* offline - fine, we already returned the cached copy */});
+          .catch(() => {/* offline - fine, we already returned the cached copy */ });
         return cached;
       }
 

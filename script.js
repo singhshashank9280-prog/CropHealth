@@ -9,7 +9,7 @@
    are inside /pages/, so the relative path to /model/ differs)
 ---------------------------------------------------------- */
 const inPagesFolder = window.location.pathname.includes("/pages/");
-const MODEL_BASE = inPagesFolder ? "../model/" : "model/";
+const MODEL_BASE = inPagesFolder ? "../" : "";
 
 let cropModel = null;
 let modelLoading = null;
@@ -264,108 +264,441 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+
+/*ESCAPE HTML*/
+function escapeHtml(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text || "";
+
+    return div.innerHTML;
+}
+
 /* ----------------------------------------------------------
    3. DETECT DISEASE (disease.html)
 ---------------------------------------------------------- */
+
 function imageToDataURL(imgEl, maxWidth = 300) {
+
     const canvas = document.createElement("canvas");
-    const scale = Math.min(1, maxWidth / imgEl.naturalWidth);
+
+    const scale = Math.min(
+        1,
+        maxWidth / imgEl.naturalWidth
+    );
+
     canvas.width = imgEl.naturalWidth * scale;
     canvas.height = imgEl.naturalHeight * scale;
+
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(imgEl, 0, 0, canvas.width, canvas.height);
-    return canvas.toDataURL("image/jpeg", 0.7); // resized + compressed
+
+    ctx.drawImage(
+        imgEl,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    return canvas.toDataURL(
+        "image/jpeg",
+        0.7
+    );
 }
+
+
 async function detectDisease() {
-    const preview = document.getElementById("previewImage");
-    const resultBox = document.getElementById("result");
 
-    if (!preview || !preview.src || preview.style.display === "none") {
-        resultBox.innerHTML = "<p>Please choose a leaf photo first.</p>";
+    const preview =
+        document.getElementById("previewImage");
+
+    const resultBox =
+        document.getElementById("result");
+
+
+    if (
+        !preview ||
+        !preview.src ||
+        preview.style.display === "none"
+    ) {
+
+        resultBox.innerHTML =
+            "<p>Please choose a leaf photo first.</p>";
+
         return;
     }
 
-    resultBox.innerHTML = "<p>Analyzing leaf...</p>";
 
-    const model = await loadCropModel();
-    if (!model) {
-        resultBox.innerHTML = "<p>Model failed to load. Please check your model files and reload the page.</p>";
-        return;
+    resultBox.innerHTML =
+        "<p>🌱 Analyzing leaf...</p>";
+
+
+    try {
+
+        // Make sure image has finished loading
+        if (!preview.complete) {
+
+            await new Promise((resolve) => {
+
+                preview.onload = resolve;
+
+            });
+
+        }
+
+
+        // Convert image to Base64
+        const imageData =
+            imageToDataURL(preview);
+
+
+        console.log(
+            "📷 Image converted successfully."
+        );
+
+
+        // Run HYBRID detection
+        const result =
+            await analyzeCropHybrid(
+                preview,
+                imageData
+            );
+
+
+        console.log(
+            "🌱 Hybrid result:",
+            result
+        );
+
+
+        // --------------------------------------------------
+        // ONLINE RESULT — GEMINI
+        // --------------------------------------------------
+
+        if (result.mode === "online") {
+
+            resultBox.innerHTML = `
+
+                <div style="
+                    background:#e8f5e9;
+                    border-left:4px solid #2e7d32;
+                    padding:12px;
+                    border-radius:8px;
+                    margin-bottom:15px;
+                ">
+
+                    <strong>
+                    🌐 Online
+                    </strong>
+
+                </div>
+
+                <div style="
+                    white-space:pre-wrap;
+                    line-height:1.6;
+                ">
+                    ${result.analysis}
+                </div>
+
+            `;
+
+
+            saveToHistory(
+                "Gemini AI Analysis",
+                0,
+                imageData
+            );
+
+            return;
+        }
+
+
+        // --------------------------------------------------
+        // OFFLINE RESULT — LOCAL MODEL
+        // --------------------------------------------------
+
+        if (result.mode === "offline") {
+
+            const confidence =
+                result.confidence;
+
+            const className =
+                result.prediction;
+
+
+            const info =
+                DISEASE_INFO[className] || {
+
+                    name: className,
+
+                    cropFamily: "Unknown",
+
+                    cause:
+                        "No information available for this class.",
+
+                    precautions: "-",
+
+                    remedy: "-"
+
+                };
+
+
+            let severity;
+            let severityColor;
+            let recovery;
+
+
+            if (
+                info.name
+                    .toLowerCase()
+                    .includes("healthy")
+            ) {
+
+                severity = 5;
+
+                severityColor =
+                    "#4caf50";
+
+                recovery =
+                    "Not applicable — crop is healthy.";
+
+            }
+
+            else if (confidence >= 80) {
+
+                severity = 70;
+
+                severityColor =
+                    "#e53935";
+
+                recovery =
+                    "Moderate to low — act quickly.";
+
+            }
+
+            else if (confidence >= 60) {
+
+                severity = 45;
+
+                severityColor =
+                    "#fb8c00";
+
+                recovery =
+                    "Good — early stage, monitor closely.";
+
+            }
+
+            else {
+
+                severity = 25;
+
+                severityColor =
+                    "#fdd835";
+
+                recovery =
+                    "Uncertain diagnosis — try a clearer photo.";
+
+            }
+
+
+            let html = `
+
+                <div style="
+                    background:#fff3cd;
+                    padding:10px;
+                    border-radius:8px;
+                    margin-bottom:12px;
+                ">
+
+                    <strong>
+                      📴 Offline
+                    </strong>
+
+                </div>
+
+
+                <h2>
+                    ${info.name}
+                </h2>
+
+
+                <p>
+                    <strong>
+                        Confidence:
+                    </strong>
+
+                    ${confidence}%
+                </p>
+
+
+                <p>
+                    <strong>
+                        Estimated severity:
+                    </strong>
+                </p>
+
+
+                <div style="
+                    background:#e0e0e0;
+                    border-radius:6px;
+                    height:14px;
+                    overflow:hidden;
+                    margin-bottom:10px;
+                ">
+
+                    <div style="
+                        height:100%;
+                        width:${severity}%;
+                        background:${severityColor};
+                    "></div>
+
+                </div>
+
+
+                <p>
+                    <strong>
+                        Recovery chance:
+                    </strong>
+
+                    ${recovery}
+                </p>
+
+
+                <p>
+                    <strong>
+                        Likely cause:
+                    </strong>
+
+                    ${info.cause}
+                </p>
+
+
+                <p>
+                    <strong>
+                        Precautions:
+                    </strong>
+
+                    ${info.precautions}
+                </p>
+
+
+                <p>
+                    <strong>
+                        Remedy:
+                    </strong>
+
+                    ${info.remedy}
+                </p>
+
+
+                <p>
+                    <strong>
+                        Other possibilities:
+                    </strong>
+                </p>
+
+                <ul>
+            `;
+
+
+            if (
+                result.predictions &&
+                result.predictions.length > 1
+            ) {
+
+                result.predictions
+                    .slice(1, 3)
+                    .forEach((p) => {
+
+                        const otherInfo =
+                            DISEASE_INFO[
+                            p.className
+                            ];
+
+                        const otherName =
+                            otherInfo
+                                ? otherInfo.name
+                                : p.className;
+
+                        html += `
+
+                            <li>
+                                ${otherName}
+                                -
+                                ${Math.round(
+                            p.probability * 100
+                        )}%
+                            </li>
+
+                        `;
+
+                    });
+
+            }
+
+
+            html += `
+                </ul>
+            `;
+
+
+            resultBox.innerHTML =
+                html;
+
+
+            saveToHistory(
+                info.name,
+                confidence,
+                imageData
+            );
+
+            return;
+        }
+
+
+        throw new Error(
+            "Unknown detection mode."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "❌ CropHealth detection error:",
+            error
+        );
+
+
+        resultBox.innerHTML = `
+
+            <div style="
+                background:#fdecea;
+                color:#b71c1c;
+                padding:12px;
+                border-radius:8px;
+            ">
+
+                <strong>
+                    ❌ Analysis failed
+                </strong>
+
+                <p>
+                    ${error.message}
+                </p>
+
+            </div>
+
+        `;
+
     }
 
-    if (!preview.complete) {
-        await new Promise((resolve) => { preview.onload = resolve; });
-    }
-
-    const predictions = await model.predict(preview);
-    predictions.sort((a, b) => b.probability - a.probability);
-
-    const top = predictions[0];
-    const confidence = Math.round(top.probability * 100);
-    const info = DISEASE_INFO[top.className] || {
-        name: top.className,
-        cropFamily: "Unknown",
-        cause: "No data available for this class.",
-        precautions: "-",
-        remedy: "-"
-    };
-
-    let severity, severityColor, recovery;
-    if (info.name.toLowerCase().includes("healthy")) {
-        severity = 5; severityColor = "#4caf50"; recovery = "Not applicable - crop is healthy.";
-    } else if (confidence >= 80) {
-        severity = 70; severityColor = "#e53935"; recovery = "Moderate to low - act quickly with the remedy below.";
-    } else if (confidence >= 60) {
-        severity = 45; severityColor = "#fb8c00"; recovery = "Good - early stage, treat this week.";
-    } else {
-        severity = 25; severityColor = "#fdd835"; recovery = "Uncertain diagnosis - consider retaking photo for a clearer result.";
-    }
-
-    let html = "";
-
-    if (confidence < 60) {
-        html += `<div style="background:#fff3cd;color:#856404;padding:10px;border-radius:8px;margin-bottom:10px;">
-      Low confidence (${confidence}%). Try a clearer, well-lit photo for a more reliable result.
-    </div>`;
-    }
-
-    html += `
-    <h2>${info.name}</h2>
-    <p><strong>Confidence:</strong> ${confidence}%</p>
-
-    <p><strong>Estimated severity:</strong></p>
-    <div style="background:#e0e0e0;border-radius:6px;height:14px;overflow:hidden;margin-bottom:10px;">
-      <div style="height:100%;width:${severity}%;background:${severityColor};"></div>
-    </div>
-
-    <p><strong>Recovery chance:</strong> ${recovery}</p>
-    <p><strong>Likely cause:</strong> ${info.cause}</p>
-    <p><strong>Precautions:</strong> ${info.precautions}</p>
-    <p><strong>Remedy:</strong> ${info.remedy}</p>
-  `;
-
-    if (severity >= 70 && ALT_CROPS[info.cropFamily]) {
-        html += `<div style="background:#fdecea;border-left:4px solid #c0392b;padding:10px 14px;border-radius:0 6px 6px 0;margin-top:14px;">
-      <p style="font-weight:600;color:#c0392b;margin-bottom:6px;">Damage severe - consider these alternatives next season:</p>
-      <ul>`;
-        ALT_CROPS[info.cropFamily].forEach((c) => {
-            html += `<li>${c.name} - ${c.reason}</li>`;
-        });
-        html += `</ul></div>`;
-    }
-
-    html += `<p><strong>Other possibilities:</strong></p><ul>`;
-    predictions.slice(1, 3).forEach((p) => {
-        const otherInfo = DISEASE_INFO[p.className];
-        const otherName = otherInfo ? otherInfo.name : p.className;
-        html += `<li>${otherName} - ${Math.round(p.probability * 100)}%</li>`;
-    });
-    html += `</ul>`;
-
-    resultBox.innerHTML = html;
-
-    saveToHistory(info.name, confidence, imageToDataURL(preview));
 }
+
 
 /* ----------------------------------------------------------
    4. HISTORY (browser storage)
@@ -500,90 +833,90 @@ async function analyzeCameraImage() {
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/maewwrqe";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const contactForm = document.getElementById("contactForm");
-  if (!contactForm) return;
+    const contactForm = document.getElementById("contactForm");
+    if (!contactForm) return;
 
-  contactForm.addEventListener("submit", handleContactSubmit);
+    contactForm.addEventListener("submit", handleContactSubmit);
 });
 
 async function handleContactSubmit(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  const nameEl = document.getElementById("contactName");
-  const emailEl = document.getElementById("contactEmail");
-  const messageEl = document.getElementById("contactMessage");
-  const honeypot = document.getElementById("contactHoneypot");
-  const statusEl = document.getElementById("contactStatus");
-  const btn = document.getElementById("contactSubmitBtn");
+    const nameEl = document.getElementById("contactName");
+    const emailEl = document.getElementById("contactEmail");
+    const messageEl = document.getElementById("contactMessage");
+    const honeypot = document.getElementById("contactHoneypot");
+    const statusEl = document.getElementById("contactStatus");
+    const btn = document.getElementById("contactSubmitBtn");
 
-  const name = nameEl.value.trim();
-  const email = emailEl.value.trim();
-  const message = messageEl.value.trim();
+    const name = nameEl.value.trim();
+    const email = emailEl.value.trim();
+    const message = messageEl.value.trim();
 
-  // Reset status
-  statusEl.style.color = "";
-  statusEl.textContent = "";
+    // Reset status
+    statusEl.style.color = "";
+    statusEl.textContent = "";
 
-  // --- Validation ---
-  if (!name || !email || !message) {
-    statusEl.style.color = "#c0392b";
-    statusEl.textContent = "Please fill in all fields before sending.";
-    return;
-  }
-
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    statusEl.style.color = "#c0392b";
-    statusEl.textContent = "Please enter a valid email address.";
-    return;
-  }
-
-  if (message.length < 10) {
-    statusEl.style.color = "#c0392b";
-    statusEl.textContent = "Please write a bit more detail in your message.";
-    return;
-  }
-
-  // Honeypot: if this hidden field got filled, it's almost certainly a bot — silently pretend success
-  if (honeypot.value.trim() !== "") {
-    statusEl.style.color = "#2e7d32";
-    statusEl.textContent = "Thank you! Your message has been sent.";
-    contactForm.reset();
-    return;
-  }
-
-  // --- Prevent double submission ---
-  btn.disabled = true;
-  const originalBtnText = btn.textContent;
-  btn.textContent = "Sending...";
-
-  try {
-    const response = await fetch(FORMSPREE_ENDPOINT, {
-      method: "POST",
-      headers: { "Accept": "application/json" },
-      body: new FormData(contactForm)
-    });
-
-    if (response.ok) {
-      statusEl.style.color = "#2e7d32";
-      statusEl.textContent = "Thank you! Your message has been sent — we'll get back to you soon.";
-      contactForm.reset();
-    } else {
-      const data = await response.json().catch(() => null);
-      const errorMsg = data && data.errors
-        ? data.errors.map(err => err.message).join(", ")
-        : "Something went wrong. Please try again in a moment.";
-      statusEl.style.color = "#c0392b";
-      statusEl.textContent = errorMsg;
+    // --- Validation ---
+    if (!name || !email || !message) {
+        statusEl.style.color = "#c0392b";
+        statusEl.textContent = "Please fill in all fields before sending.";
+        return;
     }
-  } catch (err) {
-    console.error("Contact form submission failed:", err);
-    statusEl.style.color = "#c0392b";
-    statusEl.textContent = "Network error — please check your connection and try again.";
-  } finally {
-    btn.disabled = false;
-    btn.textContent = originalBtnText;
-  }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        statusEl.style.color = "#c0392b";
+        statusEl.textContent = "Please enter a valid email address.";
+        return;
+    }
+
+    if (message.length < 10) {
+        statusEl.style.color = "#c0392b";
+        statusEl.textContent = "Please write a bit more detail in your message.";
+        return;
+    }
+
+    // Honeypot: if this hidden field got filled, it's almost certainly a bot — silently pretend success
+    if (honeypot.value.trim() !== "") {
+        statusEl.style.color = "#2e7d32";
+        statusEl.textContent = "Thank you! Your message has been sent.";
+        contactForm.reset();
+        return;
+    }
+
+    // --- Prevent double submission ---
+    btn.disabled = true;
+    const originalBtnText = btn.textContent;
+    btn.textContent = "Sending...";
+
+    try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(contactForm)
+        });
+
+        if (response.ok) {
+            statusEl.style.color = "#2e7d32";
+            statusEl.textContent = "Thank you! Your message has been sent — we'll get back to you soon.";
+            contactForm.reset();
+        } else {
+            const data = await response.json().catch(() => null);
+            const errorMsg = data && data.errors
+                ? data.errors.map(err => err.message).join(", ")
+                : "Something went wrong. Please try again in a moment.";
+            statusEl.style.color = "#c0392b";
+            statusEl.textContent = errorMsg;
+        }
+    } catch (err) {
+        console.error("Contact form submission failed:", err);
+        statusEl.style.color = "#c0392b";
+        statusEl.textContent = "Network error — please check your connection and try again.";
+    } finally {
+        btn.disabled = false;
+        btn.textContent = originalBtnText;
+    }
 }
 /* ----------------------------------------------------------
    5. DARK MODE TOGGLE
