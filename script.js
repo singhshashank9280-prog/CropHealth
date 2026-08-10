@@ -9,8 +9,7 @@
    are inside /pages/, so the relative path to /model/ differs)
 ---------------------------------------------------------- */
 const inPagesFolder = window.location.pathname.includes("/pages/");
-const MODEL_BASE = inPagesFolder ? "../" : "";
-
+const MODEL_BASE = inPagesFolder ? "../model/" : "model/";
 let cropModel = null;
 let modelLoading = null;
 
@@ -796,36 +795,159 @@ async function analyzeCameraImage() {
         return;
     }
 
-    resultBox.innerHTML = "<p>Analyzing leaf...</p>";
+    resultBox.innerHTML = "<p>🔍 Analyzing leaf...</p>";
 
-    const model = await loadCropModel();
-    if (!model) {
-        resultBox.innerHTML = "<p>Model failed to load. Please check your model files and reload the page.</p>";
-        return;
+    try {
+        // Convert captured canvas to base64 image
+        const imageData = canvas.toDataURL("image/jpeg", 0.8);
+
+        // Use the existing hybrid detection system
+        const result = await analyzeCropHybrid(
+            canvas,
+            imageData,
+            ""
+        );
+
+        console.log("Hybrid camera result:", result);
+
+        if (!result || !result.success) {
+            throw new Error("Image analysis failed.");
+        }
+
+        // =====================================================
+        // ONLINE → GEMINI
+        // =====================================================
+
+        if (result.mode === "online") {
+
+            resultBox.innerHTML = `
+                <h2>🌐 Gemini AI Analysis</h2>
+                <div class="result-box">
+                    ${formatGeminiAnalysis(result.analysis)}
+                </div>
+            `;
+
+        }
+
+        // =====================================================
+        // OFFLINE → LOCAL MODEL
+        // =====================================================
+
+        else {
+
+            const info =
+                DISEASE_INFO[result.prediction] || {
+                    name: result.prediction,
+                    cropFamily: "Unknown",
+                    cause: "No data available for this class.",
+                    precautions: "-",
+                    remedy: "-"
+                };
+
+            resultBox.innerHTML = `
+                <h2>${info.name}</h2>
+
+                <p>
+                    <strong>Confidence:</strong>
+                    ${result.confidence}%
+                </p>
+
+                <p>
+                    <strong>Mode:</strong>
+                    📴 Offline Local Model
+                </p>
+
+                <p>
+                    <strong>Likely cause:</strong>
+                    ${info.cause}
+                </p>
+
+                <p>
+                    <strong>Precautions:</strong>
+                    ${info.precautions}
+                </p>
+
+                <p>
+                    <strong>Remedy:</strong>
+                    ${info.remedy}
+                </p>
+            `;
+        }
+
+        // =====================================================
+        // SAVE HISTORY
+        // =====================================================
+
+        const historyName =
+            result.mode === "online"
+                ? "Gemini AI Analysis"
+                : result.prediction;
+
+        const historyConfidence =
+            result.mode === "online"
+                ? 0
+                : result.confidence;
+
+        saveToHistory(
+            historyName,
+            historyConfidence,
+            canvas.toDataURL("image/jpeg", 0.7)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Camera hybrid analysis failed:",
+            error
+        );
+
+        resultBox.innerHTML = `
+            <p>
+                ❌ Analysis failed.
+            </p>
+            <p>
+                ${error.message}
+            </p>
+        `;
+    }
+}
+// Helper
+function formatGeminiAnalysis(analysis) {
+
+    if (!analysis) {
+        return "<p>No analysis received.</p>";
     }
 
-    const predictions = await model.predict(canvas);
-    predictions.sort((a, b) => b.probability - a.probability);
+    if (typeof analysis === "string") {
+        return `<p>${analysis.replace(/\n/g, "<br>")}</p>`;
+    }
 
-    const top = predictions[0];
-    const confidence = Math.round(top.probability * 100);
-    const info = DISEASE_INFO[top.className] || {
-        name: top.className,
-        cropFamily: "Unknown",
-        cause: "No data available for this class.",
-        precautions: "-",
-        remedy: "-"
-    };
+    return `
+        <p>
+            <strong>Crop:</strong>
+            ${analysis.crop || "Unknown"}
+        </p>
 
-    resultBox.innerHTML = `
-    <h2>${info.name}</h2>
-    <p><strong>Confidence:</strong> ${confidence}%</p>
-    <p><strong>Likely cause:</strong> ${info.cause}</p>
-    <p><strong>Precautions:</strong> ${info.precautions}</p>
-    <p><strong>Remedy:</strong> ${info.remedy}</p>
-  `;
+        <p>
+            <strong>Disease:</strong>
+            ${analysis.disease || "Unknown"}
+        </p>
 
-    saveToHistory(info.name, confidence, canvas.toDataURL("image/jpeg", 0.7));
+        <p>
+            <strong>Cause:</strong>
+            ${analysis.cause || "Not available"}
+        </p>
+
+        <p>
+            <strong>Precautions:</strong>
+            ${analysis.precautions || "Not available"}
+        </p>
+
+        <p>
+            <strong>Remedy:</strong>
+            ${analysis.remedy || "Not available"}
+        </p>
+    `;
 }
 /* ----------------------------------------------------------
    CONTACT FORM (about.html + index.html)
@@ -1748,3 +1870,4 @@ document.addEventListener("DOMContentLoaded", () => {
     restoreFarmProfileUI();
     renderFarmSummaryBanner();
 });
+
