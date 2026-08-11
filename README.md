@@ -2,249 +2,467 @@
 
 > **AI-Powered Crop Health & Smart Farming Assistant**
 
-CropHealth is an intelligent, farmer-focused web platform designed to help farmers identify crop diseases, understand crop and soil conditions, monitor environmental factors, and make better agricultural decisions through AI-powered assistance.
+CropHealth is a farmer-focused smart agriculture platform that combines **AI-based crop disease detection, AI-assisted recommendations, detection history, weather information, location services, soil insights, educational resources, and offline-capable web technology** into a single accessible platform.
 
-The platform combines **AI-based disease detection, weather information, location services, soil insights, educational resources, and an interactive farming interface** into a single accessible solution.
+The objective is to help farmers identify potential crop health problems earlier, understand relevant environmental conditions, review previous observations, and access information that supports better field-level decisions.
 
 ---
 
 ## Overview
 
-Agricultural productivity is strongly affected by crop diseases, changing weather conditions, soil characteristics, and limited access to timely agricultural guidance.
+Farmers often face challenges in identifying crop diseases, understanding environmental conditions, accessing agricultural knowledge, and obtaining timely guidance.
 
-**CropHealth** addresses these challenges by providing farmers with a centralized digital platform that can:
+CropHealth addresses these challenges through an integrated digital platform that allows users to:
 
-* Detect crop diseases from plant images.
-* Provide information about detected diseases and possible remedies.
-* Capture images directly through a device camera.
-* Provide weather information based on location.
-* Use location services to provide geographically relevant information.
-* Provide soil-related information and insights.
-* Offer agricultural learning resources.
-* Support interaction through a simple, farmer-friendly interface.
-* Provide functionality with limited or no internet connectivity for supported features.
-
----
-
-## Key Features
-
-### AI-Based Crop Disease Detection
-
-* Upload a crop/leaf image for disease analysis.
-* Supports direct image capture using the device camera.
-* AI model analyzes the image and identifies the probable crop disease.
-* Displays disease-related information and recommended actions.
-* Designed to provide fast and accessible preliminary crop health assessment.
-
-### Weather Detection
-
-* Retrieves weather information based on the user's location.
-* Helps farmers understand current environmental conditions.
-* Weather information can support better decisions related to irrigation, crop protection, and field activities.
-
-### Location Services
-
-* Uses browser-based geolocation capabilities.
-* Detects the user's geographical location with permission.
-* Enables location-aware agricultural information and weather services.
-
-### Soil Information
-
-* Provides soil-related information to support agricultural decision-making.
-* Helps connect crop health with environmental and soil conditions.
-* Can be extended with additional soil parameters and IoT-based data sources.
-
-### Live Camera Capture
-
-* Allows users to capture crop images directly from their device.
-* Eliminates the need to first save an image before analysis.
-* Makes disease detection more convenient for field use.
-
-### AI / Machine Learning Integration
-
-* Uses a trained machine-learning model for crop disease classification.
-* Model assets include trained model files and metadata.
-* Designed for browser-based inference.
-* The architecture allows future integration with more advanced AI models.
-
-### Educational Resources
-
-* Provides agricultural learning and awareness content.
-* Uses **Teachable** to support structured educational resources and learning material.
-* Helps users understand crop diseases, preventive practices, and agricultural techniques.
-
-### Farmer Feedback & Data Collection
-
-* Uses **FormsFree** for form-based submissions and feedback collection.
-* Enables users to submit information without requiring a dedicated backend form-processing system.
-
-### Offline Support
-
-* Includes Progressive Web App functionality for supported resources.
-* Uses service-worker-based caching to improve accessibility when connectivity is limited.
-* Important static resources can remain available after they have been cached.
-* Designed with rural and low-connectivity environments in mind.
-
-### Responsive Interface
-
-* Designed to work across:
-
-  * Desktop
-  * Laptop
-  * Tablet
-  * Mobile devices
+* Upload or capture crop images.
+* Detect potential crop diseases using an AI/ML model.
+* Receive AI-assisted crop-health recommendations.
+* Access disease information and preventive actions.
+* Maintain and review previous detection results.
+* Check weather conditions using location-based information.
+* Use location services for geographically relevant functionality.
+* Access soil-related information.
+* Explore agricultural educational resources.
+* Submit feedback and information through online forms.
+* Use supported application features with limited connectivity through PWA and caching technologies.
 
 ---
 
-## Technology Stack
+# Key Features
 
-### Frontend
+## 1. AI-Based Crop Disease Detection
 
-* **HTML5** — Application structure and semantic content
-* **CSS3** — Responsive design and interface styling
-* **JavaScript** — Application logic and feature integration
-* **Web APIs** — Camera, Geolocation and browser capabilities
+CropHealth uses a trained machine-learning model to analyze crop images and classify potential crop diseases.
 
-### AI / Machine Learning
+**Capabilities include:**
 
-* **Teachable Machine** — Model training and classification
-* **TensorFlow.js** — Browser-based machine-learning inference
-* `model.json` — Model architecture
-* `metadata.json` — Model metadata and class information
-* `weights.bin` — Trained model weights
+* Image upload for disease detection.
+* Live camera capture for field-level image analysis.
+* Browser-based AI inference.
+* Disease classification using a trained model.
+* Disease-specific information.
+* AI-assisted recommendations and preventive guidance.
+* Support for future expansion to additional crops and disease classes.
 
-### External Services
+---
 
-* **Weather API** — Weather and environmental information
-* **Geolocation API** — Location detection
-* **FormsFree** — Form submission and feedback handling
-* **Teachable** — Educational and learning resources
+## 2. AI-Assisted Recommendations
 
-### PWA / Offline
+After detecting a potential disease, CropHealth provides relevant crop-health guidance based on the detected result.
+
+The recommendation layer is designed to help users understand:
+
+* Potential crop-health issues.
+* Preventive practices.
+* Basic management actions.
+* Relevant crop-health information.
+
+> AI-generated or model-assisted recommendations should be treated as preliminary guidance and verified with qualified agricultural experts when necessary.
+
+---
+
+## 3. Detection History
+
+CropHealth provides a history of previous crop-health analyses, allowing users to review earlier detection results and monitor their crop-health observations over time.
+
+**Capabilities include:**
+
+* Review previous detection results.
+* View earlier crop-health observations.
+* Track historical disease analysis.
+* Maintain a chronological record of crop analysis.
+* Refer to previous results when evaluating current crop conditions.
+
+---
+
+## 4. Weather Detection
+
+CropHealth provides weather information using location-aware functionality.
+
+Weather information can help users understand environmental conditions relevant to agricultural activities such as:
+
+* Irrigation planning.
+* Field operations.
+* Crop protection.
+* Monitoring changing weather conditions.
+
+---
+
+## 5. Location Services
+
+The application uses browser-based geolocation capabilities to obtain the user's location with permission.
+
+Location information can be used for:
+
+* Location-aware weather information.
+* Region-specific agricultural functionality.
+* Future location-based crop and soil services.
+
+---
+
+## 6. Soil Information
+
+CropHealth provides soil-related information to support crop-health awareness and agricultural decision-making.
+
+The platform architecture can be extended in the future with:
+
+* Soil moisture sensors.
+* Soil nutrient data.
+* IoT-based soil monitoring.
+* Region-specific soil recommendations.
+
+---
+
+## 7. Live Camera Capture
+
+Users can capture crop images directly through their device camera.
+
+This provides a convenient workflow:
+
+```text
+Open Camera
+     ↓
+Capture Crop Image
+     ↓
+Analyze Image
+     ↓
+AI Disease Detection
+     ↓
+AI-Assisted Recommendations
+     ↓
+Save / Review Detection History
+```
+
+This is particularly useful for field situations where users want to analyze a crop without first saving an image separately.
+
+---
+
+## 8. Educational Resources
+
+CropHealth integrates educational resources to improve agricultural awareness and learning.
+
+**Teachable** is used to support structured learning and educational content related to agriculture and crop health.
+
+The educational layer can help users learn about:
+
+* Crop diseases.
+* Preventive practices.
+* Agricultural techniques.
+* Crop-health awareness.
+
+---
+
+## 9. Feedback & Data Collection
+
+**FormsFree** is integrated for form-based submissions and feedback collection.
+
+This enables users to provide:
+
+* Feedback.
+* Suggestions.
+* Relevant information.
+* User responses.
+
+---
+
+## 10. Offline & PWA Support
+
+CropHealth uses Progressive Web App technologies to improve accessibility when network connectivity is limited.
+
+The application uses:
 
 * Service Worker
 * Cache API
 * Web App Manifest
-* Local browser caching
+* Browser caching
+* Locally available application resources
+* Browser-based AI inference
 
-### Deployment
+Supported resources can remain accessible after they have been cached.
 
-* **Render** — Production deployment and hosting
-
----
-
-## System Workflow
-
-```text
-                 ┌─────────────────────┐
-                 │      CropHealth     │
-                 │     Web Platform    │
-                 └──────────┬──────────┘
-                            │
-          ┌─────────────────┼─────────────────┐
-          │                 │                 │
-          ▼                 ▼                 ▼
-   Image / Camera       Location          User Input
-          │                 │                 │
-          ▼                 ▼                 ▼
-   AI Disease Model    Geolocation API     FormsFree
-          │                 │
-          ▼                 ▼
-   Disease Result       Weather Data
-          │
-          ▼
-   Crop Health Guidance
-          │
-          ▼
-   Farmer Decision Support
-```
+> Features that depend on external APIs or third-party services may still require an active internet connection.
 
 ---
 
-## AI Disease Detection Workflow
+## 11. Responsive Design
+
+CropHealth is designed to work across different devices, including:
+
+* Smartphones
+* Tablets
+* Laptops
+* Desktop computers
+
+---
+
+# AI & Machine Learning
+
+CropHealth uses a browser-based machine-learning architecture.
+
+## AI Technology Stack
 
 ```text
-Crop Image
-    │
-    ▼
-Image Upload / Camera Capture
-    │
-    ▼
-Image Preprocessing
-    │
-    ▼
-TensorFlow.js Model
-    │
-    ▼
+Teachable Machine
+        │
+        ▼
+   Trained ML Model
+        │
+        ├── model.json
+        ├── metadata.json
+        └── weights.bin
+        │
+        ▼
+   TensorFlow.js
+        │
+        ▼
+Browser-Based Inference
+        │
+        ▼
 Disease Classification
-    │
-    ▼
-Prediction Result
-    │
-    ▼
-Disease Information
-    │
-    ▼
-Recommended Preventive / Management Actions
+        │
+        ▼
+AI-Assisted Recommendations
+        │
+        ▼
+Detection History
+```
+
+## Model Components
+
+| File            | Purpose                              |
+| --------------- | ------------------------------------ |
+| `model.json`    | Model architecture and configuration |
+| `metadata.json` | Model metadata and class information |
+| `weights.bin`   | Trained model weights                |
+
+The model can perform inference directly in the browser, reducing the need to send every crop image to a remote AI inference server.
+
+---
+
+# System Workflow
+
+```text
+                         ┌─────────────────────┐
+                         │      CropHealth     │
+                         │   Smart Farming App │
+                         └──────────┬──────────┘
+                                    │
+              ┌─────────────────────┼─────────────────────┐
+              │                     │                     │
+              ▼                     ▼                     ▼
+       Image / Camera           Location            Farmer Input
+              │                     │                     │
+              ▼                     ▼                     ▼
+      Image Preprocessing     Weather API          FormsFree
+              │                     │
+              ▼                     ▼
+      ┌─────────────────┐      Weather Data
+      │    AI / ML      │
+      │ Teachable       │
+      │ Machine +       │
+      │ TensorFlow.js   │
+      └────────┬────────┘
+               │
+               ▼
+      Disease Classification
+               │
+               ▼
+       Disease Identification
+               │
+               ├──────────────────► Detection History
+               │
+               ▼
+      ┌─────────────────────┐
+      │ AI-Assisted         │
+      │ Recommendations     │
+      └──────────┬──────────┘
+                 │
+                 ▼
+       Disease Information
+       + Preventive Actions
+       + Crop Health Guidance
+                 │
+                 └──────────────┐
+                                ▼
+                     ┌────────────────────┐
+                     │ Farmer Decision    │
+                     │      Support       │
+                     └────────────────────┘
 ```
 
 ---
 
-## Project Structure
+# AI Disease Detection Workflow
+
+```text
+Crop Image / Live Camera
+          │
+          ▼
+  Image Preprocessing
+          │
+          ▼
+┌─────────────────────────┐
+│       AI / ML MODEL     │
+│                         │
+│  Teachable Machine      │
+│          +              │
+│     TensorFlow.js       │
+└────────────┬────────────┘
+             │
+             ▼
+   Disease Classification
+             │
+             ▼
+    Disease Identification
+             │
+             ├──────────────► Detection History
+             │
+             ▼
+┌─────────────────────────┐
+│ AI-Assisted             │
+│ Recommendations         │
+└────────────┬────────────┘
+             │
+             ▼
+    Disease Information
+             │
+             ▼
+ Preventive & Management
+        Actions
+             │
+             ▼
+    Farmer Decision
+        Support
+```
+
+---
+
+# Technology Stack
+
+## Frontend
+
+* **HTML5** — Application structure
+* **CSS3** — Responsive user interface
+* **JavaScript** — Application logic and feature integration
+* **Browser APIs** — Camera, geolocation and other web capabilities
+
+## Artificial Intelligence
+
+* **Teachable Machine** — Machine-learning model training
+* **TensorFlow.js** — Browser-based inference
+* `model.json`
+* `metadata.json`
+* `weights.bin`
+
+## External Services
+
+* **Weather API** — Weather information
+* **Geolocation API** — Location detection
+* **FormsFree** — Form submission and feedback
+* **Teachable** — Educational resources
+
+## Progressive Web App
+
+* Service Worker
+* Cache API
+* Web App Manifest
+* Browser caching
+* Offline-capable application resources
+
+## Deployment
+
+* **Render** — Application deployment and hosting
+
+---
+
+# Architecture
+
+```text
+┌───────────────────────────────────────────────────┐
+│                    CropHealth                     │
+├───────────────────────────────────────────────────┤
+│                                                   │
+│                 User Interface                   │
+│             HTML + CSS + JavaScript              │
+│                         │                         │
+│       ┌─────────────────┼─────────────────┐       │
+│       │                 │                 │       │
+│       ▼                 ▼                 ▼       │
+│    Camera            Location         User Input │
+│       │                 │                 │       │
+│       ▼                 ▼                 ▼       │
+│    AI / ML           Weather          FormsFree  │
+│  TensorFlow.js          API                      │
+│       │                                           │
+│       ▼                                           │
+│ Disease Classification                            │
+│       │                                           │
+│       ├──────────────► Detection History          │
+│       │                                           │
+│       ▼                                           │
+│ AI-Assisted Recommendations                       │
+│       │                                           │
+│       ▼                                           │
+│ Crop Health Decision Support                     │
+│                                                   │
+├───────────────────────────────────────────────────┤
+│              PWA / Offline Layer                 │
+│       Service Worker + Cache + Manifest          │
+└───────────────────────────────────────────────────┘
+```
+
+---
+
+# Project Structure
 
 ```text
 CropHealth/
 │
-├── index.html
-├── disease.html
-├── soil.html
-├── weather.html
-├── location.html
-│
 ├── css/
-│   └── *.css
+│   └── stylesheets
 │
-├── js/
-│   └── *.js
+├── icons/
+│   └── application icons
 │
 ├── model/
 │   ├── model.json
 │   ├── metadata.json
 │   └── weights.bin
 │
-├── assets/
-│   └── images/
+├── pages/
+│   └── application pages
 │
+├── server/
+│   └── server-side components
+│
+├── .gitignore
+├── LICENSE
+├── README.md
+├── hybridDetection.js
+├── index.html
 ├── manifest.json
-├── service-worker.js
-├── metadata.json
-└── README.md
+├── script.js
+└── sw.js
 ```
 
-> File and folder names may vary depending on the current project structure.
+> The exact contents of individual directories may change as the project evolves.
 
 ---
 
-## Running the Project Locally
+# Local Setup
 
-### 1. Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/singhshashank9280-prog/CropHealth.git
 cd CropHealth
 ```
 
-### 2. Run Using a Local Server
+## 2. Run Using a Local Server
 
-Because CropHealth uses browser APIs such as **Geolocation, Camera access, Service Workers, and machine-learning model loading**, running it through a local server is recommended instead of opening the HTML files directly.
+CropHealth uses browser capabilities such as camera access, geolocation, Service Workers, and model loading. Therefore, running the project through a local HTTP server is recommended.
 
-For example, using VS Code:
-
-```text
-Live Server → Open with Live Server
-```
-
-Or using another local HTTP server:
+For example, using Python:
 
 ```bash
 python3 -m http.server 5500
@@ -256,194 +474,246 @@ Then open:
 http://localhost:5500
 ```
 
----
-
-## Deployment
-
-CropHealth is deployed using **Render**.
-
-The application can be connected to the GitHub repository so that updates can be deployed from the project repository.
-
-Production deployment:
-
-[CropHealth Live Application](https://singhshashank9280-prog.github.io/CropHealth/?utm_source=chatgpt.com)
-
-> The production URL may be updated if the project is moved to a Render-managed public URL.
+Alternatively, the project can be opened using the **Live Server** extension in Visual Studio Code.
 
 ---
 
-## Offline Capability
+# Offline Capability
 
-CropHealth is designed with accessibility in low-connectivity environments in mind.
+CropHealth is designed with low-connectivity environments in mind.
 
-The Progressive Web App architecture uses:
+The offline architecture works through:
 
 ```text
-Browser
-   │
-   ▼
-Service Worker
-   │
-   ├── Cache Static Files
-   ├── Cache Application Resources
-   └── Serve Cached Resources
-             │
-             ▼
-        Offline Access
+                 Browser
+                    │
+                    ▼
+             Service Worker
+                    │
+          ┌─────────┴─────────┐
+          │                   │
+          ▼                   ▼
+    Cached Resources      Local Model
+          │                   │
+          └─────────┬─────────┘
+                    ▼
+              Offline Usage
 ```
 
-### Offline-supported components
-
-Depending on whether the required resources have already been cached:
+## Potentially available offline after caching
 
 * Application interface
 * Static assets
-* Previously cached resources
-* Locally available AI model
+* Cached resources
+* Locally stored AI model
 * Browser-based AI inference
+* Previously available detection history, where stored locally
 
-### Internet-dependent components
+## Requires internet connectivity
 
-Some features require an active internet connection, including external APIs and third-party services.
+Depending on implementation and availability:
 
----
-
-## Privacy & Permissions
-
-CropHealth may request browser permissions for certain functionality.
-
-### Camera Permission
-
-Required when the user chooses live image capture for crop disease detection.
-
-### Location Permission
-
-Required to retrieve the user's location for location-aware functionality and weather information.
-
-Permissions are requested through standard browser APIs and depend on the user's approval.
+* Weather API
+* External educational services
+* FormsFree
+* Other external APIs
 
 ---
 
-## Problem Statement
+# Detection History
 
-Farmers often face difficulties in obtaining timely and reliable information about crop diseases, weather conditions, soil characteristics, and appropriate agricultural practices.
+Detection history helps users review their previous crop-health analyses.
 
-Traditional approaches may require farmers to identify diseases manually or depend on delayed access to agricultural experts.
+The history layer can provide:
 
-CropHealth aims to reduce this information gap by bringing multiple agricultural support capabilities into one accessible digital platform.
+* Previous disease detection results.
+* Earlier crop-health observations.
+* Historical analysis records.
+* Chronological review of previous detections.
+* A reference point for comparing later crop observations.
+
+This feature is intended to make CropHealth more useful as a continuing crop-health monitoring tool rather than only a one-time disease detector.
 
 ---
 
-## Solution
+# Privacy & Permissions
 
-CropHealth provides a unified platform where farmers can:
+CropHealth may request browser permissions when specific functionality is used.
+
+## Camera
+
+Camera access is requested when the user chooses live image capture.
+
+## Location
+
+Location access is requested when location-based features such as weather information are used.
+
+Permissions are handled through standard browser permission mechanisms and require user approval.
+
+---
+
+# Problem Statement
+
+Farmers can face difficulty in obtaining timely information about crop diseases, environmental conditions, soil characteristics, and suitable agricultural practices.
+
+Manual disease identification can be challenging, while access to agricultural guidance may not always be immediate.
+
+CropHealth aims to reduce this information gap by providing an integrated digital platform for **crop-health detection, AI-assisted recommendations, environmental awareness, historical tracking, educational support, and decision-making assistance**.
+
+---
+
+# Proposed Solution
+
+CropHealth provides a centralized platform where users can:
 
 1. Capture or upload a crop image.
-2. Analyze the image using an AI model.
-3. Identify the probable crop disease.
-4. Access relevant crop-health information.
-5. Check weather conditions.
-6. Use location-aware functionality.
-7. Explore soil-related information.
-8. Access educational resources.
-9. Submit feedback and information.
-10. Continue using supported functionality in low-connectivity environments.
+2. Process the image using an AI/ML model.
+3. Identify a potential crop disease.
+4. Receive AI-assisted recommendations.
+5. Save and review previous detection results.
+6. Access disease and crop-health information.
+7. Check location-based weather conditions.
+8. Access soil-related information.
+9. Explore agricultural educational resources.
+10. Submit feedback.
+11. Use supported features with limited connectivity.
 
 ---
 
-## Innovation
+# Innovation
 
-CropHealth focuses on combining multiple agricultural technologies into a single farmer-oriented platform rather than providing only disease classification.
+The key innovation of CropHealth is the integration of multiple agricultural technologies into a single farmer-focused platform.
 
-### Core Innovation
+## Integrated Approach
 
-**AI + Weather + Location + Soil + Education + Offline Accessibility**
+```text
+AI Disease Detection
+        +
+AI-Assisted Recommendations
+        +
+Detection History
+        +
+Weather
+        +
+Location
+        +
+Soil Information
+        +
+Agricultural Education
+        +
+Offline/PWA Support
+        ↓
+Smart Crop Health Assistance
+```
 
-This integrated approach helps transform individual AI predictions into a broader crop-health decision-support experience.
+Instead of focusing only on image classification, CropHealth combines disease detection with contextual agricultural information and historical observations to support better decision-making.
 
 ---
 
-## Impact
+# Impact
 
 CropHealth is designed to contribute toward:
 
-* Earlier identification of crop diseases
-* Improved agricultural awareness
-* Better access to farming information
-* More informed field-level decisions
-* Reduced dependence on manual disease identification
-* Improved accessibility in low-connectivity environments
-* Greater adoption of digital agricultural technologies
+* Earlier identification of potential crop diseases.
+* Improved agricultural awareness.
+* Faster access to crop-health information.
+* AI-assisted recommendations for potential crop-health issues.
+* Better understanding of environmental conditions.
+* Historical tracking of crop-health observations.
+* More informed field-level decisions.
+* Improved access to agricultural education.
+* Greater accessibility in low-connectivity environments.
+* Increased adoption of AI-assisted agricultural technologies.
 
 ---
 
-## Future Scope
+# Future Scope
 
-The platform can be further enhanced with:
+The platform can be extended with:
 
-* IoT-based real-time soil monitoring
-* Soil moisture and nutrient sensors
-* More crop and disease classes
-* Advanced AI/LLM-based agricultural assistance
-* Multilingual voice-based interaction
-* Regional crop recommendations
-* Pest and disease outbreak alerts
-* Fertilizer and irrigation recommendations
-* Crop price and market information
-* Farmer community and expert consultation
-* Historical crop-health tracking
-* Satellite and remote-sensing integration
+* IoT-based real-time soil monitoring.
+* Soil moisture and nutrient sensors.
+* Larger crop and disease datasets.
+* More advanced AI/LLM-based agricultural assistance.
+* Multilingual voice-based interaction.
+* Regional crop recommendations.
+* Pest and disease outbreak alerts.
+* Fertilizer recommendations.
+* Smart irrigation recommendations.
+* Crop price and market information.
+* Expert consultation.
+* Farmer community features.
+* Advanced historical crop-health analytics.
+* Satellite and remote-sensing integration.
 
 ---
 
-## Security & Reliability Considerations
+# Security & Reliability
 
-* API keys and sensitive credentials should be stored securely rather than exposed in client-side source code.
-* External services should use HTTPS.
+* Sensitive API keys should not be exposed in client-side code.
+* Production services should use HTTPS.
 * User permissions should be requested only when required.
-* AI predictions should be treated as preliminary assistance rather than a guaranteed agricultural diagnosis.
-* Production deployments should use appropriate API security, validation, and rate limiting.
+* External API requests should be validated and protected appropriately.
+* AI predictions should be considered preliminary assistance rather than guaranteed agricultural diagnosis.
+* Agricultural recommendations should be verified with qualified experts for critical decisions.
 
 ---
 
-## Project Highlights
+# Project Highlights
 
 * **AI-powered crop disease detection**
+* **AI-assisted crop-health recommendations**
 * **Live camera-based crop analysis**
-* **Weather-aware agricultural assistance**
+* **Crop disease detection history**
+* **Historical crop-health tracking**
+* **Weather-aware agricultural information**
 * **Location-based functionality**
-* **Soil information**
+* **Soil-related information**
 * **Teachable educational integration**
-* **FormsFree-based feedback/data collection**
+* **FormsFree-based feedback collection**
+* **Browser-based TensorFlow.js inference**
 * **Progressive Web App architecture**
-* **Offline support for cached resources**
-* **Responsive farmer-friendly interface**
-* **Browser-based machine-learning inference**
-* **Cloud deployment through Render**
+* **Offline-capable cached resources**
+* **Responsive farmer-focused interface**
+* **Modular and extensible architecture**
+* **Cloud deployment support through Render**
 
 ---
 
-## Repository
+# Deployment
 
-[CropHealth GitHub Repository](https://github.com/singhshashank9280-prog/CropHealth?utm_source=chatgpt.com)
+CropHealth is designed for web deployment and can be deployed through **Render**.
+
+For the final submission, the production URL should point to the currently active deployment.
 
 ## Live Demo
 
 [CropHealth Live Demo](https://singhshashank9280-prog.github.io/CropHealth/?utm_source=chatgpt.com)
 
----
+> **Before final submission:** If your final production deployment is hosted on Render, replace the GitHub Pages link above with your actual Render URL. Do not list a Render deployment unless that URL is active and working.
 
-## Acknowledgement
+## GitHub Repository
 
-CropHealth was developed with the goal of applying modern web technologies and artificial intelligence to practical agricultural challenges.
-
-The project integrates machine learning, browser APIs, external services, and Progressive Web App technologies to create a scalable digital solution for crop-health assistance.
+[CropHealth GitHub Repository](https://github.com/singhshashank9280-prog/CropHealth?utm_source=chatgpt.com)
 
 ---
 
-## License
+# Acknowledgement
 
-This project is intended for educational, research, and innovation purposes.
+CropHealth was developed with the objective of applying modern web technologies and artificial intelligence to practical agricultural challenges.
 
-Add an appropriate open-source license to the repository if the project is intended for public redistribution.
+The project combines **machine learning, browser APIs, external services, Progressive Web App technologies, historical tracking, and farmer-focused design** to create an accessible crop-health assistance platform.
 
+---
+
+# License
+
+This project is licensed under the **MIT License**.
+
+See the `LICENSE` file for details.
+
+---
+
+## Final Project Vision
+
+> **CropHealth aims to make AI-powered crop-health assistance more accessible by bringing disease detection, AI-assisted recommendations, detection history, weather, location, soil information, education, and offline-capable technology together in one farmer-focused platform.**
