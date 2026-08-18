@@ -1871,3 +1871,265 @@ document.addEventListener("DOMContentLoaded", () => {
     renderFarmSummaryBanner();
 });
 
+/* ----------------------------------------------------------
+   7. SITE-WIDE INTERFACE TRANSLATION (nav language icons)
+   Note: this is intentionally named setSiteLanguage() (not
+   changeLanguage()) so it does not collide with the unrelated
+   changeLanguage() function above used by the Q&A assistant
+   on language.html.
+---------------------------------------------------------- */
+
+// 1. Translations mapping for every data-i18n / data-i18n-placeholder key in index.html
+const translations = {
+  en: {
+    nav_home: "Home",
+    nav_disease: "Disease Detection",
+    nav_camera: "Image Capture",
+    nav_voice: "Voice Assistant",
+    nav_lang: "Language",
+    nav_history: "History",
+    nav_about: "About",
+    result_pending: "Awaiting Scan...",
+    instruction: "Please upload a crop image.",
+    hero_title: "Welcome to CropHealth 🌱",
+    hero_desc: "A platform to identify crop diseases, understand crop health and help farmers through digital assistance.",
+    hero_btn: "Start Detection",
+    farm_title: "🌾 Your Farm Profile",
+    farm_desc: "Detect your location for local weather, choose your soil type, and get seasonal crop suggestions.",
+    farm_loc_btn: "📍 Detect My Location",
+    farm_loc: "Location",
+    farm_not_set: "Not set",
+    farm_weather: "Weather",
+    farm_soil: "Soil Type",
+    soil_select: "Select soil type",
+    farm_season: "Seasonal Crop Suggestions",
+    support_title: "Farmer Support",
+    support_desc: "Get information about crops, diseases and prevention methods.",
+    sup_card1_title: "Disease Prevention",
+    sup_card1_desc: "Learn how to protect crops from diseases using better farming practices.",
+    sup_card2_title: "Crop Information",
+    sup_card2_desc: "Get information about crop health, growth and maintenance.",
+    sup_card3_title: "Smart Assistance",
+    sup_card3_desc: "Use voice and text support for farming related questions.",
+    feat_title: "Our Features",
+    feat_card1_title: "📷 Image Detection",
+    feat_card1_desc: "Upload crop images and analyze health conditions.",
+    feat_card2_title: "🎤 Voice Assistant",
+    feat_card2_desc: "Ask farming questions using voice.",
+    feat_card3_title: "🌍 Multiple Languages",
+    feat_card3_desc: "Support for Indian regional languages.",
+    contact_btn: "Send Message",
+    contact_name: "Your Name",
+    contact_email: "Your Email",
+    contact_msg: "Your Message",
+    footer_desc: "Smart agriculture support platform for better crop health.",
+    footer_copy: "© 2026 CropHealth. All rights reserved.",
+    disease_blight: "Late Blight Detected",
+    remedy_blight: "Apply a copper-based fungicide immediately."
+  },
+  hi: {
+    nav_home: "होम",
+    nav_disease: "रोग पहचान",
+    nav_camera: "फोटो लें",
+    nav_voice: "वॉइस असिस्टेंट",
+    nav_lang: "भाषा",
+    nav_history: "इतिहास",
+    nav_about: "हमारे बारे में",
+    result_pending: "स्कैन की प्रतीक्षा है...",
+    instruction: "कृपया फसल की तस्वीर अपलोड करें।",
+    hero_title: "CropHealth में आपका स्वागत है 🌱",
+    hero_desc: "फसल रोगों की पहचान करने, फसल स्वास्थ्य को समझने और डिजिटल सहायता के माध्यम से किसानों की मदद करने का एक मंच।",
+    hero_btn: "पहचान शुरू करें",
+    farm_title: "🌾 आपकी खेत प्रोफ़ाइल",
+    farm_desc: "स्थानीय मौसम के लिए अपना स्थान पहचानें, अपनी मिट्टी का प्रकार चुनें और मौसमी फसल सुझाव प्राप्त करें।",
+    farm_loc_btn: "📍 मेरा स्थान पहचानें",
+    farm_loc: "स्थान",
+    farm_not_set: "सेट नहीं है",
+    farm_weather: "मौसम",
+    farm_soil: "मिट्टी का प्रकार",
+    soil_select: "मिट्टी का प्रकार चुनें",
+    farm_season: "मौसमी फसल सुझाव",
+    support_title: "किसान सहायता",
+    support_desc: "फसलों, रोगों और रोकथाम के तरीकों के बारे में जानकारी प्राप्त करें।",
+    sup_card1_title: "रोग रोकथाम",
+    sup_card1_desc: "बेहतर कृषि पद्धतियों का उपयोग करके फसलों को रोगों से बचाना सीखें।",
+    sup_card2_title: "फसल जानकारी",
+    sup_card2_desc: "फसल स्वास्थ्य, वृद्धि और रखरखाव के बारे में जानकारी प्राप्त करें।",
+    sup_card3_title: "स्मार्ट सहायता",
+    sup_card3_desc: "खेती से जुड़े सवालों के लिए वॉइस और टेक्स्ट सहायता का उपयोग करें।",
+    feat_title: "हमारी विशेषताएं",
+    feat_card1_title: "📷 इमेज डिटेक्शन",
+    feat_card1_desc: "फसल की तस्वीरें अपलोड करें और स्वास्थ्य स्थिति का विश्लेषण करें।",
+    feat_card2_title: "🎤 वॉइस असिस्टेंट",
+    feat_card2_desc: "आवाज़ का उपयोग करके खेती से जुड़े सवाल पूछें।",
+    feat_card3_title: "🌍 कई भाषाएं",
+    feat_card3_desc: "भारतीय क्षेत्रीय भाषाओं के लिए समर्थन।",
+    contact_btn: "संदेश भेजें",
+    contact_name: "आपका नाम",
+    contact_email: "आपका ईमेल",
+    contact_msg: "आपका संदेश",
+    footer_desc: "बेहतर फसल स्वास्थ्य के लिए स्मार्ट कृषि सहायता मंच।",
+    footer_copy: "© 2026 CropHealth. सर्वाधिकार सुरक्षित।",
+    disease_blight: "पछेती झुलसा का पता चला",
+    remedy_blight: "तुरंत तांबा आधारित कवकनाशी का प्रयोग करें।"
+  },
+  as: {
+    nav_home: "গৃহ",
+    nav_disease: "ৰোগ চিনাক্তকৰণ",
+    nav_camera: "ছবি তোলা",
+    nav_voice: "ভইচ সহায়ক",
+    nav_lang: "ভাষা",
+    nav_history: "ইতিহাস",
+    nav_about: "আমাৰ বিষয়ে",
+    result_pending: "স্কেনৰ বাবে ৰৈ আছো...",
+    instruction: "অনুগ্ৰহ কৰি শস্যৰ এখন ফটো আপলোড কৰক।",
+    hero_title: "CropHealth লৈ আপোনাক স্বাগতম 🌱",
+    hero_desc: "শস্যৰ ৰোগ চিনাক্ত কৰিবলৈ, শস্যৰ স্বাস্থ্য বুজিবলৈ আৰু ডিজিটেল সহায়ৰ জৰিয়তে কৃষকক সহায় কৰিবলৈ এক প্লেটফৰ্ম।",
+    hero_btn: "চিনাক্তকৰণ আৰম্ভ কৰক",
+    farm_title: "🌾 আপোনাৰ খেতি প্ৰ'ফাইল",
+    farm_desc: "স্থানীয় বতৰৰ বাবে আপোনাৰ অৱস্থান চিনাক্ত কৰক, মাটিৰ প্ৰকাৰ বাছনি কৰক আৰু ঋতুকালীন শস্যৰ পৰামৰ্শ লাভ কৰক।",
+    farm_loc_btn: "📍 মোৰ অৱস্থান চিনাক্ত কৰক",
+    farm_loc: "অৱস্থান",
+    farm_not_set: "ছেট কৰা নাই",
+    farm_weather: "বতৰ",
+    farm_soil: "মাটিৰ প্ৰকাৰ",
+    soil_select: "মাটিৰ প্ৰকাৰ বাছক",
+    farm_season: "ঋতুকালীন শস্যৰ পৰামৰ্শ",
+    support_title: "কৃষক সহায়",
+    support_desc: "শস্য, ৰোগ আৰু প্ৰতিৰোধ পদ্ধতিৰ বিষয়ে তথ্য লাভ কৰক।",
+    sup_card1_title: "ৰোগ প্ৰতিৰোধ",
+    sup_card1_desc: "উন্নত কৃষি পদ্ধতি ব্যৱহাৰ কৰি শস্যক ৰোগৰ পৰা কেনেকৈ ৰক্ষা কৰিব লাগে জানক।",
+    sup_card2_title: "শস্যৰ তথ্য",
+    sup_card2_desc: "শস্যৰ স্বাস্থ্য, বৃদ্ধি আৰু ৰক্ষণাবেক্ষণৰ বিষয়ে তথ্য লাভ কৰক।",
+    sup_card3_title: "স্মাৰ্ট সহায়",
+    sup_card3_desc: "কৃষি সম্পৰ্কীয় প্ৰশ্নৰ বাবে ভইচ আৰু টেক্সট সহায় ব্যৱহাৰ কৰক।",
+    feat_title: "আমাৰ সুবিধাসমূহ",
+    feat_card1_title: "📷 ছবি চিনাক্তকৰণ",
+    feat_card1_desc: "শস্যৰ ছবি আপলোড কৰক আৰু স্বাস্থ্যৰ অৱস্থা বিশ্লেষণ কৰক।",
+    feat_card2_title: "🎤 ভইচ সহায়ক",
+    feat_card2_desc: "কণ্ঠস্বৰ ব্যৱহাৰ কৰি কৃষি সম্পৰ্কীয় প্ৰশ্ন সোধক।",
+    feat_card3_title: "🌍 একাধিক ভাষা",
+    feat_card3_desc: "ভাৰতীয় আঞ্চলিক ভাষাৰ বাবে সমৰ্থন।",
+    contact_btn: "বার্তা পঠিয়াওক",
+    contact_name: "আপোনাৰ নাম",
+    contact_email: "আপোনাৰ ইমেইল",
+    contact_msg: "আপোনাৰ বার্তা",
+    footer_desc: "উন্নত শস্য স্বাস্থ্যৰ বাবে স্মাৰ্ট কৃষি সহায় প্লেটফৰ্ম।",
+    footer_copy: "© 2026 CropHealth. সৰ্বস্বত্ব সংৰক্ষিত।",
+    disease_blight: "পলমকৈ হোৱা ব্লাইট ধৰা পৰিছে",
+    remedy_blight: "লগে লগে কপাৰ ভিত্তিক ভেঁকুৰনাশক প্ৰয়োগ কৰক।"
+  },
+  bn: {
+    nav_home: "হোম",
+    nav_disease: "রোগ শনাক্তকরণ",
+    nav_camera: "ছবি তোলা",
+    nav_voice: "ভয়েস সহায়ক",
+    nav_lang: "ভাষা",
+    nav_history: "ইতিহাস",
+    nav_about: "আমাদের সম্পর্কে",
+    result_pending: "স্ক্যানের জন্য অপেক্ষা করা হচ্ছে...",
+    instruction: "অনুগ্রহ করে একটি ফসলের ছবি আপলোড করুন।",
+    hero_title: "CropHealth-এ স্বাগতম 🌱",
+    hero_desc: "ফসলের রোগ শনাক্ত করতে, ফসলের স্বাস্থ্য বুঝতে এবং ডিজিটাল সহায়তার মাধ্যমে কৃষকদের সাহায্য করার একটি প্ল্যাটফর্ম।",
+    hero_btn: "শনাক্তকরণ শুরু করুন",
+    farm_title: "🌾 আপনার খামার প্রোফাইল",
+    farm_desc: "স্থানীয় আবহাওয়ার জন্য আপনার অবস্থান শনাক্ত করুন, মাটির ধরন বেছে নিন এবং মৌসুমি ফসলের পরামর্শ পান।",
+    farm_loc_btn: "📍 আমার অবস্থান শনাক্ত করুন",
+    farm_loc: "অবস্থান",
+    farm_not_set: "সেট করা হয়নি",
+    farm_weather: "আবহাওয়া",
+    farm_soil: "মাটির ধরন",
+    soil_select: "মাটির ধরন নির্বাচন করুন",
+    farm_season: "মৌসুমি ফসলের পরামর্শ",
+    support_title: "কৃষক সহায়তা",
+    support_desc: "ফসল, রোগ এবং প্রতিরোধ পদ্ধতি সম্পর্কে তথ্য পান।",
+    sup_card1_title: "রোগ প্রতিরোধ",
+    sup_card1_desc: "উন্নত কৃষি পদ্ধতি ব্যবহার করে ফসলকে রোগ থেকে রক্ষা করতে শিখুন।",
+    sup_card2_title: "ফসলের তথ্য",
+    sup_card2_desc: "ফসলের স্বাস্থ্য, বৃদ্ধি এবং রক্ষণাবেক্ষণ সম্পর্কে তথ্য পান।",
+    sup_card3_title: "স্মার্ট সহায়তা",
+    sup_card3_desc: "কৃষি সম্পর্কিত প্রশ্নের জন্য ভয়েস এবং টেক্সট সহায়তা ব্যবহার করুন।",
+    feat_title: "আমাদের বৈশিষ্ট্যসমূহ",
+    feat_card1_title: "📷 ছবি শনাক্তকরণ",
+    feat_card1_desc: "ফসলের ছবি আপলোড করুন এবং স্বাস্থ্যের অবস্থা বিশ্লেষণ করুন।",
+    feat_card2_title: "🎤 ভয়েস সহায়ক",
+    feat_card2_desc: "কণ্ঠস্বর ব্যবহার করে কৃষি সম্পর্কিত প্রশ্ন জিজ্ঞাসা করুন।",
+    feat_card3_title: "🌍 একাধিক ভাষা",
+    feat_card3_desc: "ভারতীয় আঞ্চলিক ভাষার জন্য সমর্থন।",
+    contact_btn: "বার্তা পাঠান",
+    contact_name: "আপনার নাম",
+    contact_email: "আপনার ইমেইল",
+    contact_msg: "আপনার বার্তা",
+    footer_desc: "উন্নত ফসল স্বাস্থ্যের জন্য স্মার্ট কৃষি সহায়তা প্ল্যাটফর্ম।",
+    footer_copy: "© 2026 CropHealth. সর্বস্বত্ব সংরক্ষিত।",
+    disease_blight: "বিলম্বিত ব্লাইট শনাক্ত হয়েছে",
+    remedy_blight: "অবিলম্বে তামা-ভিত্তিক ছত্রাকনাশক প্রয়োগ করুন।"
+  }
+};
+
+const SUPPORTED_LANGS = Object.keys(translations); // ["en","hi","as","bn"]
+let currentLang = localStorage.getItem('cropHealthLang') || 'en';
+if (!SUPPORTED_LANGS.includes(currentLang)) currentLang = 'en';
+
+// 2. Apply the currently selected language to every translatable element on the page
+function applyTranslations() {
+  const dict = translations[currentLang] || translations.en;
+
+  // Text content: <tag data-i18n="key">
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    const text = dict[key] || translations.en[key];
+    if (text) el.textContent = text;
+  });
+
+  // Placeholder text: <input data-i18n-placeholder="key">
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const text = dict[key] || translations.en[key];
+    if (text) el.setAttribute('placeholder', text);
+  });
+
+  document.documentElement.setAttribute('lang', currentLang);
+}
+
+// 3. Highlight whichever language icon is active in the navbar
+function updateActiveLangIcon() {
+  document.querySelectorAll('.lang-icon').forEach((btn) => btn.classList.remove('active'));
+  const activeBtn = document.getElementById(`lang-btn-${currentLang}`);
+  if (activeBtn) activeBtn.classList.add('active');
+}
+
+// 4. Called by the navbar language icons: onclick="setSiteLanguage('hi')"
+function setSiteLanguage(lang) {
+  if (!SUPPORTED_LANGS.includes(lang)) return;
+  currentLang = lang;
+  localStorage.setItem('cropHealthLang', lang);
+  updateActiveLangIcon();
+  applyTranslations();
+}
+
+// Apply the saved (or default) language as soon as the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  updateActiveLangIcon();
+  applyTranslations();
+});
+
+// 5. Hook this into your ML Scanner result
+function onScanComplete(mlPrediction) {
+  /*
+   Assume your ML model returns "blight".
+   You update the data-i18n tags dynamically, then trigger the translation refresh.
+  */
+
+  const titleEl = document.getElementById('scan-title');
+  const remedyEl = document.getElementById('scan-remedy');
+
+  // Map the ML output to your dictionary keys
+  if (mlPrediction === 'blight') {
+      titleEl.setAttribute('data-i18n', 'disease_blight');
+      remedyEl.setAttribute('data-i18n', 'remedy_blight');
+  }
+
+  // Refresh the display with the current language
+  applyTranslations();
+}
